@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>San Valentín 💖</title>
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #d8b6c6;
+    font-family: 'Comic Sans MS', cursive;
+    overflow-x: hidden;
+    padding: 20px;
+}
+
+/* Guirnalda superior */
+.guirnalda {
+    position: absolute;
+    top: 15px;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    color: #d63384;
+}
+
+/* Tarjeta tipo papel */
+.tarjeta {
+    background: white;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 25px;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    transform: rotate(-2deg);
+    position: relative;
+    text-align: center;
+}
+
+.tarjeta:before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    width: 60px;
+    height: 25px;
+    background: #f8c8dc;
+    transform: rotate(-15deg);
+}
+
+h1 {
+    color: #d63384;
+    font-size: 22px;
+}
+
+button {
+    margin: 15px 10px;
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#btnSi {
+    background: #ff4d6d;
+    color: white;
+}
+
+#btnSi:hover {
+    transform: scale(1.15);
+}
+
+#btnNo {
+    background: #444;
+    color: white;
+    position: relative;
+}
+
+.promesas {
+    margin-top: 20px;
+    text-align: left;
+    color: #d63384;
+    font-size: 15px;
+}
+
+.promesas h3 {
+    text-align: center;
+    font-size: 16px;
+}
+
+.oculto {
+    display: none;
+}
+
+.final {
+    margin-top: 20px;
+    color: #c2185b;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Ajustes para pantallas grandes */
+@media (min-width: 768px) {
+    h1 {
+        font-size: 28px;
+    }
+
+    button {
+        font-size: 20px;
+        padding: 14px 30px;
+    }
+
+    .guirnalda {
+        font-size: 30px;
+        top: 30px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="guirnalda">💗 💕 💖 💘 💝 💕 💗</div>
+
+<div class="tarjeta">
+
+<h1 id="pregunta">¿Quieres ser mi cita de San Valentín?</h1>
+
+<div id="botones">
+    <button id="btnSi">Sí</button>
+    <button id="btnNo">No</button>
+</div>
+
+<div class="promesas" id="promesas">
+    <h3>✨ Estas son mis promesas para ti ✨</h3>
+    <div id="listaPromesas"></div>
+</div>
+
+<div class="final" id="final"></div>
+
+</div>
+
+<script>
+const btnSi = document.getElementById("btnSi");
+const btnNo = document.getElementById("btnNo");
+const pregunta = document.getElementById("pregunta");
+const final = document.getElementById("final");
+const listaPromesas = document.getElementById("listaPromesas");
+
+let intento = 0;
+
+const promesas = [
+    "🛍️ Te prometo un Día de shopping",
+    "💆🏻‍♀️ Te prometo Sets de skincare",
+    "👑 Te prometo hacer todo y que tú descanses"
+];
+
+btnSi.addEventListener("click", function() {
+    document.getElementById("botones").classList.add("oculto");
+    pregunta.textContent = "Sabía que dirías que sí 😍";
+    final.innerHTML = `
+        💌 Invitación Especial 💌 <br><br>
+        📅 14 de febrero <br>
+        ⏰ 08:00 pm <br>
+        👗 Vestimenta: Semi elegante <br><br>
+        Te amo mucho ❤️
+    `;
+});
+
+btnNo.addEventListener("click", function() {
+    intento++;
+
+    // Mostrar solo UNA promesa a la vez
+    if (intento <= promesas.length) {
+        listaPromesas.innerHTML = ""; // limpia la anterior
+        const nuevaPromesa = document.createElement("div");
+        nuevaPromesa.textContent = promesas[intento - 1];
+        listaPromesas.appendChild(nuevaPromesa);
+    }
+
+    if (intento === 1) {
+        pregunta.textContent = "¿Estás segura? 😢";
+        final.textContent = "Piénsalo bien...";
+    }
+    else if (intento === 2) {
+        pregunta.textContent = "Te doy otra oportunidad 😭";
+        final.textContent = "Mira lo que estoy dispuesto a prometer... 💖";
+    }
+    else if (intento === 3) {
+        pregunta.textContent = "Última oportunidad...";
+        final.textContent = "";
+        btnSi.style.transform = "scale(1.4)";
+    }
+    else {
+        pregunta.textContent = "Ya no puedes decir que no 😌";
+        btnNo.classList.add("oculto");
+        document.getElementById("promesas").classList.add("oculto"); // ocultar todo al final
+    }
+});
+</script>
+
+</body>
+</html>
